@@ -2,7 +2,7 @@
 import sqlite3
 import os
 from pathlib import Path
-from dotev import load_dotenv
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -13,7 +13,7 @@ DB_PATH = Path(DB_FOLDER) / DB_NAME
 
 def setup_database():
 
-    DB_FOLDER.mkdir(exist_ok=True)
+    Path(DB_FOLDER).mkdir(exist_ok=True)
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()

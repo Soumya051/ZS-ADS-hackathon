@@ -2,7 +2,7 @@
 import sqlite3
 import os
 from pathlib import Path
-from dotev import load_dotenv
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -12,19 +12,6 @@ DB_PATH = Path(DB_FOLDER) / DB_NAME
 
 def get_connection():
     return sqlite3.connect(DB_PATH)
-
-def execute_insert(query, rows):
-
-    conn = get_connection()
-    cursor = conn.cursor()
-
-    if isinstance(rows[0], tuple):
-        cursor.executemany(query, rows)
-    else:
-        cursor.execute(query, rows)
-
-    conn.commit()
-    conn.close()
 
 def validate_shapes(*args):
 
@@ -51,9 +38,8 @@ def validate_shapes(*args):
     return
 
 
-def execute_insert(query, rows):
+def execute_insert(conn, query, rows):
 
-    conn = get_connection()
     cursor = conn.cursor()
 
     if isinstance(rows[0], tuple):
@@ -62,10 +48,10 @@ def execute_insert(query, rows):
         cursor.execute(query, rows)
 
     conn.commit()
-    conn.close()
 
 
 def insert_orders(
+    connection,
     order_id,
     customer_id,
     status,
@@ -121,10 +107,11 @@ def insert_orders(
             payment_method
         )
 
-    execute_insert(query, rows)
+    execute_insert(connection, query, rows)
 
 
 def insert_items(
+    connection,
     item_id,
     order_id,
     product_id,
@@ -172,10 +159,11 @@ def insert_items(
             status
         )
 
-    execute_insert(query, rows)
+    execute_insert(connection, query, rows)
 
 
 def insert_customers(
+    connection,
     customer_id,
     name,
     email,
@@ -219,10 +207,11 @@ def insert_customers(
             preferred_refund_method
         )
 
-    execute_insert(query, rows)
+    execute_insert(connection, query, rows)
 
 
 def insert_addresses(
+    connection,
     address_id,
     customer_id,
     label,
@@ -274,10 +263,11 @@ def insert_addresses(
             pincode
         )
 
-    execute_insert(query, rows)
+    execute_insert(connection, query, rows)
 
 
 def insert_cases(
+    connection,
     case_id,
     customer_id,
     order_id,
@@ -333,10 +323,11 @@ def insert_cases(
             created_at
         )
 
-    execute_insert(query, rows)
+    execute_insert(connection, query, rows)
 
 
 def insert_kb_articles(
+    connection,
     article_id,
     title,
     tags,
@@ -380,10 +371,11 @@ def insert_kb_articles(
             applies_to
         )
 
-    execute_insert(query, rows)
+    execute_insert(connection, query, rows)
 
 
 def insert_payment_config(
+    connection,
     auto_refund_limit_inr,
     supported_method,
     refund_sla_days,
@@ -420,4 +412,4 @@ def insert_payment_config(
             behaviour
         )
 
-    execute_insert(query, rows)
+    execute_insert(connection, query, rows)
