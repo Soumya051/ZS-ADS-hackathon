@@ -113,6 +113,17 @@ def setup_database():
 
     #Payment_config Table
     cursor.execute("""
+        CREATE TABLE IF NOT EXISTS queries (
+        query_id TEXT PRIMARY KEY,
+        customer_id TEXT NON NULL,
+        order_id TEXT NON NULL,
+        status TEXT NON NULL,
+        user_query TEXT NON NULL
+    )
+    """)
+
+    #Payment_config Table
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS payment_config (
         auto_refund_limit_inr INTEGER NOT NULL,
         supported_method TEXT NON NULL,

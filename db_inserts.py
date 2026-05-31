@@ -373,6 +373,49 @@ def insert_kb_articles(
 
     execute_insert(connection, query, rows)
 
+def insert_queries(
+    connection,
+    query_id,
+    customer_id,
+    order_id,
+    status,
+    user_query
+):
+
+    query = """
+    INSERT INTO queries VALUES (?, ?, ?, ?, ?)
+    """
+
+    validate_shapes(
+        query_id,
+        customer_id,
+        order_id,
+        status,
+        user_query
+    )
+
+    if isinstance(query_id, list):
+
+        rows = list(zip(
+            query_id,
+            customer_id,
+            order_id,
+            status,
+            user_query
+            ))
+
+
+    else:
+
+        rows = (
+            query_id,
+            customer_id,
+            order_id,
+            status,
+            user_query
+        )
+
+    execute_insert(connection, query, rows)
 
 def insert_payment_config(
     connection,
