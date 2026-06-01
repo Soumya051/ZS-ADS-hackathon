@@ -379,11 +379,13 @@ def insert_queries(
     customer_id,
     order_id,
     status,
-    user_query
+    user_query,
+    intent,
+    intent_details
 ):
 
     query = """
-    INSERT INTO queries VALUES (?, ?, ?, ?, ?)
+    INSERT INTO queries VALUES (?, ?, ?, ?, ?, ?, ?)
     """
 
     validate_shapes(
@@ -391,7 +393,9 @@ def insert_queries(
         customer_id,
         order_id,
         status,
-        user_query
+        user_query,
+        intent,
+        intent_details
     )
 
     if isinstance(query_id, list):
@@ -401,7 +405,9 @@ def insert_queries(
             customer_id,
             order_id,
             status,
-            user_query
+            user_query,
+            intent,
+            intent_details
             ))
 
 
@@ -412,7 +418,9 @@ def insert_queries(
             customer_id,
             order_id,
             status,
-            user_query
+            user_query,
+            intent,
+            intent_details
         )
 
     execute_insert(connection, query, rows)

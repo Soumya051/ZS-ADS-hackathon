@@ -118,7 +118,9 @@ def setup_database():
         customer_id TEXT NON NULL,
         order_id TEXT NON NULL,
         status TEXT NON NULL,
-        user_query TEXT NON NULL
+        user_query TEXT NON NULL,
+        intent TEXT NON NULL,
+        intent_details TEXT
     )
     """)
 
